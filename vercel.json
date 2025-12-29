@@ -23,7 +23,7 @@
         }
     ],
     "env": {
-        "DATABASE_URL": "@database_url",
-        "HF_TOKEN": "@hf_token"
+        "DATABASE_URL": "@DATABASE_URL",
+        "HF_TOKEN": "@HF_TOKEN"
     }
 }
