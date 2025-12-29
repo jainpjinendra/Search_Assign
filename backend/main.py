@@ -29,9 +29,15 @@ class SearchResult(BaseModel):
     fts_score: Optional[float] = None
     sem_score: Optional[float] = None
 
-@app.on_event("startup")
-async def startup():
-    await db.init_db()
+# Database initialization flag
+_db_initialized = False
+
+async def ensure_db_initialized():
+    """Lazy database initialization for serverless environments"""
+    global _db_initialized
+    if not _db_initialized:
+        await db.init_db()
+        _db_initialized = True
 
 @app.get("/api/search")
 async def search(
@@ -39,6 +45,7 @@ async def search(
     mode: str = Query("hybrid", regex="^(hybrid|semantic|keyword)$"),
     limit: int = 10
 ):
+    await ensure_db_initialized()
     results = []
     
     if mode == "keyword":

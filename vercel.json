@@ -1,22 +1,18 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "backend/main.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "frontend/package.json",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "dist"
-            }
+    "buildCommand": "cd frontend && npm install && npm run build",
+    "outputDirectory": "frontend/dist",
+    "framework": null,
+    "functions": {
+        "api/index.py": {
+            "runtime": "python3.9",
+            "maxDuration": 30
         }
-    ],
+    },
     "routes": [
         {
             "src": "/api/(.*)",
-            "dest": "/backend/main.py"
+            "dest": "/api/index.py"
         },
         {
             "handle": "filesystem"
@@ -25,5 +21,9 @@
             "src": "/(.*)",
             "dest": "/index.html"
         }
-    ]
+    ],
+    "env": {
+        "DATABASE_URL": "@database_url",
+        "HF_TOKEN": "@hf_token"
+    }
 }

@@ -1,0 +1,18 @@
+# Dependencies
+node_modules
+__pycache__
+*.pyc
+venv
+.venv
+
+# Environment files
+.env
+.env.local
+
+# Build outputs
+frontend/dist
+.vercel
+
+# Development files
+*.log
+.DS_Store
